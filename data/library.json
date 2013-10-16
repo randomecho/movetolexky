@@ -1,0 +1,50 @@
+[  
+  {
+    "name": "Village Branch",
+    "address": "2185 Versailles Rd",
+    "atlex": "6",
+    "page": "44",
+    "grid": "L-21",
+    "coordinates": "-84.548369873431042,38.047876944446763"
+  },
+  {
+    "name": "Northside Branch",
+    "address": "1733 Russell Cave Rd",
+    "atlex": "4",
+    "page": "32",
+    "grid": "S-17",
+    "coordinates": "-84.471350242443037,38.079734212383336"
+  },
+  {
+    "name": "Central Library",
+    "address": "140 E Main St",
+    "atlex": "2",
+    "page": "45",
+    "grid": "Q-22",
+    "coordinates": "-84.496894563914523,38.045459980974293"
+  },
+  {
+    "name": "Beaumont Branch",
+    "address": "3080 Fieldstone Way",
+    "atlex": "1",
+    "page": "57",
+    "grid": "K-26",
+    "coordinates": "-84.557948973173822,38.012502602781012"
+  },
+  {
+    "name": "Tates Creek Branch",
+    "address": "3628 Walden Dr",
+    "atlex": "5",
+    "page": "70",
+    "grid": "P-30",
+    "coordinates": "-84.498679687783095,37.979598241797731"
+  },
+  {
+    "name": "Eagle Creek Branch",
+    "address": "101 N Eagle Creek Dr",
+    "atlex": "3",
+    "page": "61",
+    "grid": "V-27",
+    "coordinates": "-84.442219631440395,37.999437200105625"
+  }
+]
