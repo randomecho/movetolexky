@@ -1,0 +1,82 @@
+[  
+  {
+    "name": "VA MEDICAL CENTER -- LEESTOWN DIVISION",
+    "address": "2250 LEESTOWN RD",
+    "atlex": "10",
+    "page": "30",
+    "grid": "L-18",
+    "coordinates": "-84.539487131342625,38.072916679954183"
+  },
+  {
+    "name": "ST JOSEPH EAST",
+    "address": "150 N EAGLE CREEK DR",
+    "atlex": "5",
+    "page": "61",
+    "grid": "V-27",
+    "coordinates": "-84.440434877734504,37.998757573833593"
+  },
+  {
+    "name": "CENTRAL BAPTIST HOSPITAL",
+    "address": "1740 NICHOLASVILLE RD",
+    "atlex": "2",
+    "page": "59",
+    "grid": "O-25",
+    "coordinates": "-84.512283272257093,38.018918315531202"
+  },
+  {
+    "name": "VA MEDICAL CENTER -- COOPER DR DIVISION",
+    "address": "1101 VETERANS DR",
+    "atlex": "9",
+    "page": "59",
+    "grid": "P-24",
+    "coordinates": "-84.506483200241803,38.02972031075516"
+  },
+  {
+    "name": "SHRINERS HOSPITAL FOR CHILDREN",
+    "address": "1900 RICHMOND RD",
+    "atlex": "4",
+    "page": "60",
+    "grid": "S-24",
+    "coordinates": "-84.472941651314116,38.022564423634016"
+  },
+  {
+    "name": "EASTERN STATE HOSPITAL",
+    "address": "627 W FOURTH ST",
+    "atlex": "3",
+    "page": "45",
+    "grid": "P-20",
+    "coordinates": "-84.498816188529901,38.060791372685578"
+  },
+  {
+    "name": "CARDINAL HILL REHABILITATION HOSPITAL",
+    "address": "2050 VERSAILLES RD",
+    "atlex": "1",
+    "page": "44",
+    "grid": "L-21",
+    "coordinates": "-84.542120397862305,38.046568179746536"
+  },
+  {
+    "name": "ST JOSEPH HOSPITAL",
+    "address": "1 ST JOSEPH DR",
+    "atlex": "6",
+    "page": "44",
+    "grid": "N-23",
+    "coordinates": "-84.523636811918081,38.032475893132229"
+  },
+  {
+    "name": "UK HEALTHCARE GOOD SAMARITAN HOSPITAL",
+    "address": "310 S LIMESTONE",
+    "atlex": "7",
+    "page": "45",
+    "grid": "P-22",
+    "coordinates": "-84.501222098470308,38.042123229920691"
+  },
+  {
+    "name": "UK MEDICAL CENTER",
+    "address": "800 ROSE ST",
+    "atlex": "8",
+    "page": "45",
+    "grid": "P-23",
+    "coordinates": "-84.50820554262819,38.031254963249999"
+  }
+]

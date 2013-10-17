@@ -1,5 +1,6 @@
 var map;
 var plot_library = [];
+var plot_hospital = [];
 
 function initialize() {
   var mapOptions = {
@@ -52,14 +53,13 @@ $(function(){
   $('#show-library').click(
     function(){
       var button_hit = $(this);
-
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/library.json", function(data){
           var library_count = data.length;
 
           for (var i = 0; i < library_count; i++)
-          {	
+          {
             var longlat = data[i].coordinates.split(',');
             var marker = plotMarker(longlat[1],longlat[0], data[i].name, i);
 
@@ -68,7 +68,7 @@ $(function(){
 
           addMarkers(plot_library);
         });
-				
+
         button_hit.text('Hide libraries');
         button_hit.attr('data-state', 'hide');
       }
@@ -77,6 +77,38 @@ $(function(){
         clearMarkers(plot_library);
 
         button_hit.text('Show libraries');
+        button_hit.attr('data-state', 'show');
+      }
+    }
+  );
+
+  $('#show-hospital').click(
+    function(){
+      var button_hit = $(this);
+      if (button_hit.attr('data-state') == 'show')
+      {
+        $.getJSON("data/hospital.json", function(data){
+          var hospital_count = data.length;
+
+          for (var i = 0; i < hospital_count; i++)
+          {
+            var longlat = data[i].coordinates.split(',');
+            var marker = plotMarker(longlat[1],longlat[0], data[i].name, i);
+
+            plot_hospital.push(marker);
+          }
+
+          addMarkers(plot_hospital);
+        });
+
+        button_hit.text('Hide hospitals');
+        button_hit.attr('data-state', 'hide');
+      }
+      else
+      {
+        clearMarkers(plot_hospital);
+
+        button_hit.text('Show hospitals');
         button_hit.attr('data-state', 'show');
       }
     }

@@ -14,7 +14,6 @@ Currently adding these data points
 - Bike trails
 - Fault lines
 - Flood hazard areas
-- Hospitals
 - Parks
 - Schools
 
