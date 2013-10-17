@@ -3,6 +3,12 @@
 Mapping and marking amenities, facilities and points of interest 
 that may be helpful in picking an area of Lexington, Kentucky to move to.
 
+The map shows location points, lines and area segments for such things as:
+
+- Fault lines
+- Hospitals
+- Libraries
+
 ## Sources
 
 - [Lexington's Open Data Portal](http://data.lexingtonky.gov/)
@@ -12,7 +18,6 @@ that may be helpful in picking an area of Lexington, Kentucky to move to.
 Currently adding these data points
 
 - Bike trails
-- Fault lines
 - Flood hazard areas
 - Parks
 - Schools
