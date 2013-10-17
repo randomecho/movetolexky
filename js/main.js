@@ -81,15 +81,13 @@ $(function(){
           addMarkers(plot_library);
         });
 
-        button_hit.text('Hide libraries');
-        button_hit.attr('data-state', 'hide');
+        button_hit.text('Hide libraries').attr('data-state', 'hide').addClass('clicked');
       }
       else
       {
         clearMarkers(plot_library);
 
-        button_hit.text('Show libraries');
-        button_hit.attr('data-state', 'show');
+        button_hit.text('Show libraries').attr('data-state', 'show').removeClass('clicked');
       }
     }
   );
@@ -113,15 +111,13 @@ $(function(){
           addMarkers(plot_hospital);
         });
 
-        button_hit.text('Hide hospitals');
-        button_hit.attr('data-state', 'hide');
+        button_hit.text('Hide hospitals').attr('data-state', 'hide').addClass('clicked');
       }
       else
       {
         clearMarkers(plot_hospital);
 
-        button_hit.text('Show hospitals');
-        button_hit.attr('data-state', 'show');
+        button_hit.text('Show hospitals').attr('data-state', 'show').removeClass('clicked');
       }
     }
   );
@@ -153,15 +149,13 @@ $(function(){
           addMarkers(plot_faultline);
         });
 
-        button_hit.text('Hide fault lines');
-        button_hit.attr('data-state', 'hide');
+        button_hit.text('Hide fault lines').attr('data-state', 'hide').addClass('clicked');
       }
       else
       {
         clearMarkers(plot_faultline);
 
-        button_hit.text('Show fault lines');
-        button_hit.attr('data-state', 'show');
+        button_hit.text('Show fault lines').attr('data-state', 'show').removeClass('clicked');
       }
     }
   );

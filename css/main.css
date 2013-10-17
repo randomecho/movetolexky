@@ -46,6 +46,19 @@ a {
   text-decoration: none;
 }
 
+button {
+  background: #005da9;
+  border: 2px solid #a5d5ff;
+  border-radius: 5px;
+  color: #a5d5ff;
+  padding: 0.3em 0.5em;
+}
+
+.clicked {
+  background: #fff;
+  color: #005da9;
+}
+
 #map-canvas { 
   height: 600px;
   width: 100%;
