@@ -38,6 +38,19 @@ function plotPolyline(polyline_coords) {
   return marker_line;
 }
 
+function plotPolygon(polygon_coords) {
+  var marked_area = new google.maps.Polygon({
+    path: polygon_coords,
+    strokeColor: '#005DA9',
+    strokeOpacity: 1.0,
+    strokeWeight: 3,
+    fillColor: '#005DA9',
+    fillOpacity: 0.1
+  });
+  
+  return marked_area;
+}
+
 // Run through and show the markers that have been plotted
 function addMarkers(plotted_markers) {
   var marker_count = plotted_markers.length;
