@@ -2,6 +2,7 @@ var map;
 var plot_library = [];
 var plot_hospital = [];
 var plot_faultline = [];
+var plot_school = [];
 
 function initialize() {
   var mapOptions = {
@@ -169,6 +170,65 @@ $(function(){
         clearMarkers(plot_faultline);
 
         button_hit.text('Show fault lines').attr('data-state', 'show').removeClass('clicked');
+      }
+    }
+  );
+
+  $('#show-school').click(
+    function(){
+      var button_hit = $(this);
+      if (button_hit.attr('data-state') == 'show')
+      {
+        $.getJSON("data/school.json", function(data){
+          var school_count = data.length;
+
+          for (var i = 0; i < school_count; i++)
+          {
+            var school_coords = [];
+
+            if (typeof data[i].coordinates === 'object')
+            {
+              var multi_plot_count = data[i].coordinates.length;
+
+              for (var k = 0; k < multi_plot_count; k++)
+              {
+                var school_points = data[i].coordinates[k].split(' ');
+                var polyline_point_count = school_points.length;
+
+                for (var j = 0; j < polyline_point_count; j++)
+                {
+                  var polygon_longlat = school_points[j].split(',');
+                  var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
+                  school_coords.push(polygon_coords);
+                }
+              }
+            }
+            else
+            {
+              var school_points = data[i].coordinates.split(' ');
+              var polyline_point_count = school_points.length;
+
+              for (var j = 0; j < polyline_point_count; j++)
+              {
+                var polygon_longlat = school_points[j].split(',');
+                var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
+                school_coords.push(polygon_coords);
+              }
+            }
+
+            plot_school.push(plotPolygon(school_coords));
+          }
+
+          addMarkers(plot_school);
+        });
+
+        button_hit.text('Hide schools').attr('data-state', 'hide').addClass('clicked');
+      }
+      else
+      {
+        clearMarkers(plot_school);
+
+        button_hit.text('Show schools').attr('data-state', 'show').removeClass('clicked');
       }
     }
   );

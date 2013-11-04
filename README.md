@@ -8,6 +8,7 @@ The map shows location points, lines and area segments for such things as:
 - Fault lines
 - Hospitals
 - Libraries
+- Schools
 
 ## Sources
 
@@ -20,7 +21,6 @@ Currently adding these data points
 - Bike trails
 - Flood hazard areas
 - Parks
-- Schools
 
 Also doing these
 
