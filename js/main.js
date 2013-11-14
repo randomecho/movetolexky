@@ -3,6 +3,7 @@ var plot_library = [];
 var plot_hospital = [];
 var plot_faultline = [];
 var plot_school = [];
+var plot_park = [];
 
 function initialize() {
   var mapOptions = {
@@ -225,6 +226,65 @@ $(function(){
         clearMarkers(plot_school);
 
         button_hit.text('Show schools').attr('data-state', 'show').removeClass('clicked');
+      }
+    }
+  );
+
+  $('#show-park').click(
+    function(){
+      var button_hit = $(this);
+      if (button_hit.attr('data-state') == 'show')
+      {
+        $.getJSON("data/park.json", function(data){
+          var park_count = data.length;
+
+          for (var i = 0; i < park_count; i++)
+          {
+            var park_coords = [];
+
+            if (typeof data[i].coordinates === 'object')
+            {
+              var multi_plot_count = data[i].coordinates.length;
+
+              for (var k = 0; k < multi_plot_count; k++)
+              {
+                var park_points = data[i].coordinates[k].split(' ');
+                var polyline_point_count = park_points.length;
+
+                for (var j = 0; j < polyline_point_count; j++)
+                {
+                  var polygon_longlat = park_points[j].split(',');
+                  var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
+                  park_coords.push(polygon_coords);
+                }
+              }
+            }
+            else
+            {
+              var park_points = data[i].coordinates.split(' ');
+              var polyline_point_count = park_points.length;
+
+              for (var j = 0; j < polyline_point_count; j++)
+              {
+                var polygon_longlat = park_points[j].split(',');
+                var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
+                park_coords.push(polygon_coords);
+              }
+            }
+
+            plot_park.push(plotPolygon(park_coords));
+          }
+
+          addMarkers(plot_park);
+        });
+
+        button_hit.text('Hide parks').attr('data-state', 'hide').addClass('clicked');
+      }
+      else
+      {
+        clearMarkers(plot_park);
+
+        button_hit.text('Show parks').attr('data-state', 'show').removeClass('clicked');
       }
     }
   );
