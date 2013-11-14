@@ -74,6 +74,22 @@ function clearMarkers(plotted_markers) {
   
 }
 
+function readCoordsPoints(coordinates, plot_type)
+{
+  var coord_count = coordinates.length;
+
+  for (var i = 0; i < coord_count; i++)
+  {
+    var longlat = coordinates[i].coordinates.split(',');
+    var marker = plotMarker(longlat[1], longlat[0], coordinates[i].name, i);
+
+    plot_type.push(marker);
+  }
+
+  addMarkers(plot_type);
+}
+
+
 $(function(){
 
   $('#show-library').click(
@@ -82,17 +98,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/library.json", function(data){
-          var library_count = data.length;
-
-          for (var i = 0; i < library_count; i++)
-          {
-            var longlat = data[i].coordinates.split(',');
-            var marker = plotMarker(longlat[1], longlat[0], data[i].name, i);
-
-            plot_library.push(marker);
-          }
-
-          addMarkers(plot_library);
+          readCoordsPoints(data, plot_library);
         });
 
         button_hit.text('Hide libraries').attr('data-state', 'hide').addClass('clicked');
@@ -112,17 +118,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/hospital.json", function(data){
-          var hospital_count = data.length;
-
-          for (var i = 0; i < hospital_count; i++)
-          {
-            var longlat = data[i].coordinates.split(',');
-            var marker = plotMarker(longlat[1], longlat[0], data[i].name, i);
-
-            plot_hospital.push(marker);
-          }
-
-          addMarkers(plot_hospital);
+          readCoordsPoints(data, plot_hospital);
         });
 
         button_hit.text('Hide hospitals').attr('data-state', 'hide').addClass('clicked');
