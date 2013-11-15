@@ -4,6 +4,7 @@ var plot_hospital = [];
 var plot_faultline = [];
 var plot_school = [];
 var plot_park = [];
+var plot_flood = [];
 
 function initialize() {
   var mapOptions = {
@@ -285,6 +286,65 @@ $(function(){
         clearMarkers(plot_park);
 
         button_hit.text('Show parks').attr('data-state', 'show').removeClass('clicked');
+      }
+    }
+  );
+
+  $('#show-flood').click(
+    function(){
+      var button_hit = $(this);
+      if (button_hit.attr('data-state') == 'show')
+      {
+        $.getJSON("data/floodplain.json", function(data){
+          var floodplain_count = data.length;
+
+          for (var i = 0; i < floodplain_count; i++)
+          {
+            var floodplain_coords = [];
+
+            if (typeof data[i].coordinates === 'object')
+            {
+              var multi_plot_count = data[i].coordinates.length;
+
+              for (var k = 0; k < multi_plot_count; k++)
+              {
+                var floodplain_points = data[i].coordinates[k].split(' ');
+                var polyline_point_count = floodplain_points.length;
+
+                for (var j = 0; j < polyline_point_count; j++)
+                {
+                  var polygon_longlat = floodplain_points[j].split(',');
+                  var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
+                  floodplain_coords.push(polygon_coords);
+                }
+              }
+            }
+            else
+            {
+              var floodplain_points = data[i].coordinates.split(' ');
+              var polyline_point_count = floodplain_points.length;
+
+              for (var j = 0; j < polyline_point_count; j++)
+              {
+                var polygon_longlat = floodplain_points[j].split(',');
+                var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
+                floodplain_coords.push(polygon_coords);
+              }
+            }
+
+            plot_flood.push(plotPolygon(floodplain_coords));
+          }
+
+          addMarkers(plot_flood);
+        });
+
+        button_hit.text('Hide floodplains').attr('data-state', 'hide').addClass('clicked');
+      }
+      else
+      {
+        clearMarkers(plot_flood);
+
+        button_hit.text('Show floodplains').attr('data-state', 'show').removeClass('clicked');
       }
     }
   );

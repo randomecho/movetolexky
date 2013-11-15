@@ -6,6 +6,7 @@ that may be helpful in picking an area of Lexington, Kentucky to move to.
 The map shows location points, lines and area segments for such things as:
 
 - Fault lines
+- Flood hazard areas
 - Hospitals
 - Libraries
 - Parks
@@ -20,7 +21,6 @@ The map shows location points, lines and area segments for such things as:
 Currently adding these data points
 
 - Bike trails
-- Flood hazard areas
 
 Also doing these
 
