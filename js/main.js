@@ -90,12 +90,34 @@ function renderCoordsPoints(coordinates, plot_type) {
   addMarkers(plot_type);
 }
 
+function renderCoordsPolyline(coordinates, plot_type) {
+  var coord_count = coordinates.length;
+
+  for (var i = 0; i < coord_count; i++)
+  {
+    var coords_plotted = [];
+    var coord_points = coordinates[i].coordinates.split(' ');
+    var polyline_point_count = coord_points.length;
+
+    for (var j = 0; j < polyline_point_count; j++)
+    {
+      var polyline_longlat = coord_points[j].split(',');
+      var polyline_coords = new google.maps.LatLng(polyline_longlat[1], polyline_longlat[0]);
+      coords_plotted.push(polyline_coords);
+    }
+
+    plot_type.push(plotPolyline(coords_plotted));
+  }
+
+  addMarkers(plot_type);
+}
+
 function renderCoordsPolygon(coordinates, plot_type) {
   var coord_count = coordinates.length;
 
   for (var i = 0; i < coord_count; i++)
   {
-    var coord_coords = [];
+    var coords_plotted = [];
   
     if (typeof coordinates[i].coordinates === 'object')
     {
@@ -110,7 +132,7 @@ function renderCoordsPolygon(coordinates, plot_type) {
         {
           var polygon_longlat = coord_points[j].split(',');
           var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-          coord_coords.push(polygon_coords);
+          coords_plotted.push(polygon_coords);
         }
       }
     }
@@ -123,11 +145,11 @@ function renderCoordsPolygon(coordinates, plot_type) {
       {
         var polygon_longlat = coord_points[j].split(',');
         var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-        coord_coords.push(polygon_coords);
+        coords_plotted.push(polygon_coords);
       }
     }
 
-    plot_type.push(plotPolygon(coord_coords));
+    plot_type.push(plotPolygon(coords_plotted));
   }
 
   addMarkers(plot_type);
@@ -180,25 +202,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/faultline.json", function(data){
-          var faultline_count = data.length;
-
-          for (var i = 0; i < faultline_count; i++)
-          {
-            var faultline_coords = [];
-            var faultline_points = data[i].coordinates.split(' ');
-            var polyline_point_count = faultline_points.length;
-
-            for (var j = 0; j < polyline_point_count; j++)
-            {
-              var polyline_longlat = faultline_points[j].split(',');
-              var polyline_coords = new google.maps.LatLng(polyline_longlat[1], polyline_longlat[0]);
-              faultline_coords.push(polyline_coords);
-            }
-
-            plot_faultline.push(plotPolyline(faultline_coords));
-          }
-
-          addMarkers(plot_faultline);
+          renderCoordsPolyline(data, plot_faultline);
         });
 
         button_hit.text('Hide fault lines').attr('data-state', 'hide').addClass('clicked');
