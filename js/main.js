@@ -76,8 +76,7 @@ function clearMarkers(plotted_markers) {
   
 }
 
-function readCoordsPoints(coordinates, plot_type)
-{
+function renderCoordsPoints(coordinates, plot_type) {
   var coord_count = coordinates.length;
 
   for (var i = 0; i < coord_count; i++)
@@ -86,6 +85,49 @@ function readCoordsPoints(coordinates, plot_type)
     var marker = plotMarker(longlat[1], longlat[0], coordinates[i].name, i);
 
     plot_type.push(marker);
+  }
+
+  addMarkers(plot_type);
+}
+
+function renderCoordsPolygon(coordinates, plot_type) {
+  var coord_count = coordinates.length;
+
+  for (var i = 0; i < coord_count; i++)
+  {
+    var coord_coords = [];
+  
+    if (typeof coordinates[i].coordinates === 'object')
+    {
+      var multi_plot_count = coordinates[i].coordinates.length;
+  
+      for (var k = 0; k < multi_plot_count; k++)
+      {
+        var coord_points = coordinates[i].coordinates[k].split(' ');
+        var polyline_point_count = coord_points.length;
+  
+        for (var j = 0; j < polyline_point_count; j++)
+        {
+          var polygon_longlat = coord_points[j].split(',');
+          var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
+          coord_coords.push(polygon_coords);
+        }
+      }
+    }
+    else
+    {
+      var coord_points = coordinates[i].coordinates.split(' ');
+      var polyline_point_count = coord_points.length;
+
+      for (var j = 0; j < polyline_point_count; j++)
+      {
+        var polygon_longlat = coord_points[j].split(',');
+        var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
+        coord_coords.push(polygon_coords);
+      }
+    }
+
+    plot_type.push(plotPolygon(coord_coords));
   }
 
   addMarkers(plot_type);
@@ -100,7 +142,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/library.json", function(data){
-          readCoordsPoints(data, plot_library);
+          renderCoordsPoints(data, plot_library);
         });
 
         button_hit.text('Hide libraries').attr('data-state', 'hide').addClass('clicked');
@@ -108,7 +150,6 @@ $(function(){
       else
       {
         clearMarkers(plot_library);
-
         button_hit.text('Show libraries').attr('data-state', 'show').removeClass('clicked');
       }
     }
@@ -120,7 +161,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/hospital.json", function(data){
-          readCoordsPoints(data, plot_hospital);
+          renderCoordsPoints(data, plot_hospital);
         });
 
         button_hit.text('Hide hospitals').attr('data-state', 'hide').addClass('clicked');
@@ -128,7 +169,6 @@ $(function(){
       else
       {
         clearMarkers(plot_hospital);
-
         button_hit.text('Show hospitals').attr('data-state', 'show').removeClass('clicked');
       }
     }
@@ -178,46 +218,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/school.json", function(data){
-          var school_count = data.length;
-
-          for (var i = 0; i < school_count; i++)
-          {
-            var school_coords = [];
-
-            if (typeof data[i].coordinates === 'object')
-            {
-              var multi_plot_count = data[i].coordinates.length;
-
-              for (var k = 0; k < multi_plot_count; k++)
-              {
-                var school_points = data[i].coordinates[k].split(' ');
-                var polyline_point_count = school_points.length;
-
-                for (var j = 0; j < polyline_point_count; j++)
-                {
-                  var polygon_longlat = school_points[j].split(',');
-                  var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-                  school_coords.push(polygon_coords);
-                }
-              }
-            }
-            else
-            {
-              var school_points = data[i].coordinates.split(' ');
-              var polyline_point_count = school_points.length;
-
-              for (var j = 0; j < polyline_point_count; j++)
-              {
-                var polygon_longlat = school_points[j].split(',');
-                var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-                school_coords.push(polygon_coords);
-              }
-            }
-
-            plot_school.push(plotPolygon(school_coords));
-          }
-
-          addMarkers(plot_school);
+          renderCoordsPolygon(data, plot_school);
         });
 
         button_hit.text('Hide schools').attr('data-state', 'hide').addClass('clicked');
@@ -237,46 +238,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/park.json", function(data){
-          var park_count = data.length;
-
-          for (var i = 0; i < park_count; i++)
-          {
-            var park_coords = [];
-
-            if (typeof data[i].coordinates === 'object')
-            {
-              var multi_plot_count = data[i].coordinates.length;
-
-              for (var k = 0; k < multi_plot_count; k++)
-              {
-                var park_points = data[i].coordinates[k].split(' ');
-                var polyline_point_count = park_points.length;
-
-                for (var j = 0; j < polyline_point_count; j++)
-                {
-                  var polygon_longlat = park_points[j].split(',');
-                  var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-                  park_coords.push(polygon_coords);
-                }
-              }
-            }
-            else
-            {
-              var park_points = data[i].coordinates.split(' ');
-              var polyline_point_count = park_points.length;
-
-              for (var j = 0; j < polyline_point_count; j++)
-              {
-                var polygon_longlat = park_points[j].split(',');
-                var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-                park_coords.push(polygon_coords);
-              }
-            }
-
-            plot_park.push(plotPolygon(park_coords));
-          }
-
-          addMarkers(plot_park);
+          renderCoordsPolygon(data, plot_park);
         });
 
         button_hit.text('Hide parks').attr('data-state', 'hide').addClass('clicked');
@@ -296,46 +258,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/floodplain.json", function(data){
-          var floodplain_count = data.length;
-
-          for (var i = 0; i < floodplain_count; i++)
-          {
-            var floodplain_coords = [];
-
-            if (typeof data[i].coordinates === 'object')
-            {
-              var multi_plot_count = data[i].coordinates.length;
-
-              for (var k = 0; k < multi_plot_count; k++)
-              {
-                var floodplain_points = data[i].coordinates[k].split(' ');
-                var polyline_point_count = floodplain_points.length;
-
-                for (var j = 0; j < polyline_point_count; j++)
-                {
-                  var polygon_longlat = floodplain_points[j].split(',');
-                  var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-                  floodplain_coords.push(polygon_coords);
-                }
-              }
-            }
-            else
-            {
-              var floodplain_points = data[i].coordinates.split(' ');
-              var polyline_point_count = floodplain_points.length;
-
-              for (var j = 0; j < polyline_point_count; j++)
-              {
-                var polygon_longlat = floodplain_points[j].split(',');
-                var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-                floodplain_coords.push(polygon_coords);
-              }
-            }
-
-            plot_flood.push(plotPolygon(floodplain_coords));
-          }
-
-          addMarkers(plot_flood);
+          renderCoordsPolygon(data, plot_flood);
         });
 
         button_hit.text('Hide floodplains').attr('data-state', 'hide').addClass('clicked');
