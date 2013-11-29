@@ -41,10 +41,12 @@ function plotPolyline(polyline_coords) {
   return marker_line;
 }
 
-function plotPolygon(polygon_coords) {
+function plotPolygon(polygon_coords, polygon_color) {
+  polygon_color = (typeof polygon_color == 'undefined' ) ? '#005DA9' : polygon_color;
+ 
   var marked_area = new google.maps.Polygon({
     path: polygon_coords,
-    strokeColor: '#005DA9',
+    strokeColor: polygon_color,
     strokeOpacity: 1.0,
     strokeWeight: 3,
     fillColor: '#005DA9',
@@ -112,7 +114,8 @@ function renderCoordsPolyline(coordinates, plot_type) {
   addMarkers(plot_type);
 }
 
-function renderCoordsPolygon(coordinates, plot_type) {
+function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
+  polygon_color = (typeof polygon_color == 'undefined' ) ? '' : polygon_color;
   var coord_count = coordinates.length;
 
   for (var i = 0; i < coord_count; i++)
@@ -149,7 +152,7 @@ function renderCoordsPolygon(coordinates, plot_type) {
       }
     }
 
-    plot_type.push(plotPolygon(coords_plotted));
+    plot_type.push(plotPolygon(coords_plotted, polygon_color));
   }
 
   addMarkers(plot_type);
@@ -222,7 +225,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/school.json", function(data){
-          renderCoordsPolygon(data, plot_school);
+          renderCoordsPolygon(data, plot_school, '#333333');
         });
 
         button_hit.text('Hide schools').attr('data-state', 'hide').addClass('clicked');
@@ -242,7 +245,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/park.json", function(data){
-          renderCoordsPolygon(data, plot_park);
+          renderCoordsPolygon(data, plot_park, '#339933');
         });
 
         button_hit.text('Hide parks').attr('data-state', 'hide').addClass('clicked');
@@ -262,7 +265,7 @@ $(function(){
       if (button_hit.attr('data-state') == 'show')
       {
         $.getJSON("data/floodplain.json", function(data){
-          renderCoordsPolygon(data, plot_flood);
+          renderCoordsPolygon(data, plot_flood, '#005DA9');
         });
 
         button_hit.text('Hide floodplains').attr('data-state', 'hide').addClass('clicked');
