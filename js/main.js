@@ -166,9 +166,16 @@ $(function(){
       var button_hit = $(this);
       if (button_hit.attr('data-state') == 'show')
       {
-        $.getJSON("data/library.json", function(data){
-          renderCoordsPoints(data, plot_library);
-        });
+        if (plot_library.length == 0)
+        {
+          $.getJSON("data/library.json", function(data){
+            renderCoordsPoints(data, plot_library);
+          });
+        }
+        else
+        {
+          addMarkers(plot_library);
+        }
 
         button_hit.text('Hide libraries').attr('data-state', 'hide').addClass('clicked');
       }
@@ -185,9 +192,16 @@ $(function(){
       var button_hit = $(this);
       if (button_hit.attr('data-state') == 'show')
       {
-        $.getJSON("data/hospital.json", function(data){
-          renderCoordsPoints(data, plot_hospital);
-        });
+        if (plot_hospital.length == 0)
+        {
+          $.getJSON("data/hospital.json", function(data){
+            renderCoordsPoints(data, plot_hospital);
+          });
+        }
+        else
+        {
+          addMarkers(plot_hospital);
+        }
 
         button_hit.text('Hide hospitals').attr('data-state', 'hide').addClass('clicked');
       }
@@ -204,9 +218,16 @@ $(function(){
       var button_hit = $(this);
       if (button_hit.attr('data-state') == 'show')
       {
-        $.getJSON("data/faultline.json", function(data){
-          renderCoordsPolyline(data, plot_faultline);
-        });
+        if (plot_faultline.length == 0)
+        {
+          $.getJSON("data/faultline.json", function(data){
+            renderCoordsPolyline(data, plot_faultline);
+          });
+        }
+        else
+        {
+          addMarkers(plot_faultline);
+        }
 
         button_hit.text('Hide fault lines').attr('data-state', 'hide').addClass('clicked');
       }
@@ -224,9 +245,16 @@ $(function(){
       var button_hit = $(this);
       if (button_hit.attr('data-state') == 'show')
       {
-        $.getJSON("data/school.json", function(data){
-          renderCoordsPolygon(data, plot_school, '#333333');
-        });
+        if (plot_school.length == 0)
+        {
+          $.getJSON("data/school.json", function(data){
+            renderCoordsPolygon(data, plot_school, '#333333');
+          });
+        }
+        else
+        {
+          addMarkers(plot_school);
+        }
 
         button_hit.text('Hide schools').attr('data-state', 'hide').addClass('clicked');
       }
@@ -244,9 +272,16 @@ $(function(){
       var button_hit = $(this);
       if (button_hit.attr('data-state') == 'show')
       {
-        $.getJSON("data/park.json", function(data){
-          renderCoordsPolygon(data, plot_park, '#339933');
-        });
+        if (plot_park.length == 0)
+        {
+          $.getJSON("data/park.json", function(data){
+            renderCoordsPolygon(data, plot_park, '#339933');
+          });
+        }
+        else
+        {
+          addMarkers(plot_park);
+        }
 
         button_hit.text('Hide parks').attr('data-state', 'hide').addClass('clicked');
       }
@@ -264,9 +299,16 @@ $(function(){
       var button_hit = $(this);
       if (button_hit.attr('data-state') == 'show')
       {
-        $.getJSON("data/floodplain.json", function(data){
-          renderCoordsPolygon(data, plot_flood, '#005DA9');
-        });
+        if (plot_flood.length == 0)
+        {
+          $.getJSON("data/floodplain.json", function(data){
+            renderCoordsPolygon(data, plot_flood, '#005DA9');
+          });
+        }
+        else
+        {
+          addMarkers(plot_flood);
+        }
 
         button_hit.text('Hide floodplains').attr('data-state', 'hide').addClass('clicked');
       }
