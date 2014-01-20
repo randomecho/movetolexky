@@ -18,14 +18,7 @@ The map shows location points, lines and area segments for such things as:
 
 ### Todoing
 
-Currently adding these data points
-
 - Bike trails
-
-Also doing these
-
-- Replace buttons with icons
-- Replace map markers with icons
 
 ## License
 

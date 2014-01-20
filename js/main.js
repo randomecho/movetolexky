@@ -19,12 +19,13 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 // Mark where on the map the point should go
-function plotMarker(latitude, longitude, title, zindex) {
+function plotMarker(latitude, longitude, title, zindex, icon) {
   var map_coords = new google.maps.LatLng(latitude, longitude);
   var marker = new google.maps.Marker({
     position: map_coords,
     title: title,
-    zIndex: zindex
+    zIndex: zindex,
+    icon: icon
   });
   
   return marker;
@@ -78,13 +79,13 @@ function clearMarkers(plotted_markers) {
   
 }
 
-function renderCoordsPoints(coordinates, plot_type) {
+function renderCoordsPoints(coordinates, plot_type, icon) {
   var coord_count = coordinates.length;
 
   for (var i = 0; i < coord_count; i++)
   {
     var longlat = coordinates[i].coordinates.split(',');
-    var marker = plotMarker(longlat[1], longlat[0], coordinates[i].name, i);
+    var marker = plotMarker(longlat[1], longlat[0], coordinates[i].name, i, icon);
 
     plot_type.push(marker);
   }
@@ -164,12 +165,14 @@ $(function(){
   $('#show-library').click(
     function(){
       var button_hit = $(this);
+      var icon = 'images/icon-library.png';
+
       if (button_hit.attr('data-state') == 'show')
       {
         if (plot_library.length == 0)
         {
           $.getJSON("data/library.json", function(data){
-            renderCoordsPoints(data, plot_library);
+            renderCoordsPoints(data, plot_library, icon);
           });
         }
         else
@@ -190,12 +193,14 @@ $(function(){
   $('#show-hospital').click(
     function(){
       var button_hit = $(this);
+      var icon = 'images/icon-hospital.png';
+
       if (button_hit.attr('data-state') == 'show')
       {
         if (plot_hospital.length == 0)
         {
           $.getJSON("data/hospital.json", function(data){
-            renderCoordsPoints(data, plot_hospital);
+            renderCoordsPoints(data, plot_hospital, icon);
           });
         }
         else
