@@ -96,6 +96,23 @@ function overlayAmenityPoints(amenity, plot_points, open_data, button_hit) {
   }
 }
 
+function overlayAmenityPolygons(amenity, plot_points, open_data, color, button_hit) {
+  if (button_hit.attr('data-state') == 'show') {
+    if (plot_points.length == 0) {
+      $.getJSON("data/" + open_data + ".json", function(data){
+        renderCoordsPolygon(data, plot_points, color);
+      });
+    } else {
+      addMarkers(plot_points);
+    }
+
+    toggleAmenityChosen(button_hit, amenity, 'hide');
+  } else {
+    clearMarkers(plot_points);
+    toggleAmenityChosen(button_hit, amenity);
+  }
+}
+
 function renderCoordsPoints(coordinates, plot_type, icon) {
   var coord_count = coordinates.length;
 
@@ -226,80 +243,19 @@ $(function(){
 
   $('#show-school').click(
     function(){
-      var button_hit = $(this);
-      if (button_hit.attr('data-state') == 'show')
-      {
-        if (plot_school.length == 0)
-        {
-          $.getJSON("data/school.json", function(data){
-            renderCoordsPolygon(data, plot_school, '#333333');
-          });
-        }
-        else
-        {
-          addMarkers(plot_school);
-        }
-
-        toggleAmenityChosen(button_hit, 'schools', 'hide');
-      }
-      else
-      {
-        clearMarkers(plot_school);
-        toggleAmenityChosen(button_hit, 'schools');
-      }
+      overlayAmenityPolygons('schools', plot_school, 'school', '#333333', $(this));
     }
   );
 
   $('#show-park').click(
     function(){
-      var button_hit = $(this);
-      if (button_hit.attr('data-state') == 'show')
-      {
-        if (plot_park.length == 0)
-        {
-          $.getJSON("data/park.json", function(data){
-            renderCoordsPolygon(data, plot_park, '#339933');
-          });
-        }
-        else
-        {
-          addMarkers(plot_park);
-        }
-
-        toggleAmenityChosen(button_hit, 'parks', 'hide');
-      }
-      else
-      {
-        clearMarkers(plot_park);
-        toggleAmenityChosen(button_hit, 'parks');
-      }
+      overlayAmenityPolygons('parks', plot_park, 'park', '#393', $(this));
     }
   );
 
   $('#show-flood').click(
     function(){
-      var button_hit = $(this);
-      if (button_hit.attr('data-state') == 'show')
-      {
-        if (plot_flood.length == 0)
-        {
-          $.getJSON("data/floodplain.json", function(data){
-            renderCoordsPolygon(data, plot_flood, '#005DA9');
-          });
-        }
-        else
-        {
-          addMarkers(plot_flood);
-        }
-
-        toggleAmenityChosen(button_hit, 'floodplains', 'hide');
-      }
-      else
-      {
-        clearMarkers(plot_flood);
-        toggleAmenityChosen(button_hit, 'floodplains');
-      }
+      overlayAmenityPolygons('floodplains', plot_flood, 'floodplain', '#005da9', $(this));
     }
   );
-
 });
