@@ -79,6 +79,23 @@ function clearMarkers(plotted_markers) {
   
 }
 
+function overlayAmenityPoints(amenity, plot_points, open_data, button_hit) {
+  if (button_hit.attr('data-state') == 'show') {
+    if (plot_points.length == 0) {
+      $.getJSON("data/" + open_data + ".json", function(data){
+        renderCoordsPoints(data, plot_points, 'images/icon-' + open_data + '.png');
+      });
+    } else {
+      addMarkers(plot_points);
+    }
+
+    toggleAmenityChosen(button_hit, amenity, 'hide');
+  } else {
+    clearMarkers(plot_points);
+    toggleAmenityChosen(button_hit, amenity);
+  }
+}
+
 function renderCoordsPoints(coordinates, plot_type, icon) {
   var coord_count = coordinates.length;
 
@@ -161,9 +178,9 @@ function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
 
 function toggleAmenityChosen(button_id, amenity, new_state = 'show') {
   if (new_state === 'show') {
-    return button_id.text(new_state + ' ' + amenity).attr('data-state', new_state).removeClass('clicked');
+    button_id.text(new_state + ' ' + amenity).attr('data-state', new_state).removeClass('clicked');
   } else {
-    return button_id.text(new_state + ' ' + amenity).attr('data-state', new_state).addClass('clicked');
+    button_id.text(new_state + ' ' + amenity).attr('data-state', new_state).addClass('clicked');
   }
 }
 
@@ -171,57 +188,13 @@ $(function(){
 
   $('#show-library').click(
     function(){
-      var button_hit = $(this);
-      var icon = 'images/icon-library.png';
-
-      if (button_hit.attr('data-state') == 'show')
-      {
-        if (plot_library.length == 0)
-        {
-          $.getJSON("data/library.json", function(data){
-            renderCoordsPoints(data, plot_library, icon);
-          });
-        }
-        else
-        {
-          addMarkers(plot_library);
-        }
-
-        toggleAmenityChosen(button_hit, 'libraries', 'hide');
-      }
-      else
-      {
-        clearMarkers(plot_library);
-        toggleAmenityChosen(button_hit, 'libraries');
-      }
+      overlayAmenityPoints('libraries', plot_library, 'library', $(this));
     }
   );
 
   $('#show-hospital').click(
     function(){
-      var button_hit = $(this);
-      var icon = 'images/icon-hospital.png';
-
-      if (button_hit.attr('data-state') == 'show')
-      {
-        if (plot_hospital.length == 0)
-        {
-          $.getJSON("data/hospital.json", function(data){
-            renderCoordsPoints(data, plot_hospital, icon);
-          });
-        }
-        else
-        {
-          addMarkers(plot_hospital);
-        }
-
-        toggleAmenityChosen(button_hit, 'hospitals', 'hide');
-      }
-      else
-      {
-        clearMarkers(plot_hospital);
-        toggleAmenityChosen(button_hit, 'hospitals');
-      }
+      overlayAmenityPoints('hospitals', plot_hospital, 'hospital', $(this));
     }
   );
 
