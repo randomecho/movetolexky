@@ -79,6 +79,23 @@ function clearMarkers(plotted_markers) {
   
 }
 
+function overlayAmenityLines(amenity, plot_points, open_data, button_hit) {
+  if (button_hit.attr('data-state') == 'show') {
+    if (plot_points.length == 0) {
+      $.getJSON("data/" + open_data + ".json", function(data){
+        renderCoordsPolyline(data, plot_points);
+      });
+    } else {
+      addMarkers(plot_points);
+    }
+
+    toggleAmenityChosen(button_hit, amenity, 'hide');
+  } else {
+    clearMarkers(plot_points);
+    toggleAmenityChosen(button_hit, amenity);
+  }
+}
+
 function overlayAmenityPoints(amenity, plot_points, open_data, button_hit) {
   if (button_hit.attr('data-state') == 'show') {
     if (plot_points.length == 0) {
@@ -217,27 +234,7 @@ $(function(){
 
   $('#show-fault').click(
     function(){
-      var button_hit = $(this);
-      if (button_hit.attr('data-state') == 'show')
-      {
-        if (plot_faultline.length == 0)
-        {
-          $.getJSON("data/faultline.json", function(data){
-            renderCoordsPolyline(data, plot_faultline);
-          });
-        }
-        else
-        {
-          addMarkers(plot_faultline);
-        }
-
-        toggleAmenityChosen(button_hit, 'fault lines', 'hide');
-      }
-      else
-      {
-        clearMarkers(plot_faultline);
-        toggleAmenityChosen(button_hit, 'fault lines');
-      }
+      overlayAmenityLines('fault lines', plot_faultline, 'faultline', $(this));
     }
   );
 
