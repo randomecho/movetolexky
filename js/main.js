@@ -159,6 +159,13 @@ function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
   addMarkers(plot_type);
 }
 
+function toggleAmenityChosen(button_id, amenity, new_state = 'show') {
+  if (new_state === 'show') {
+    return button_id.text(new_state + ' ' + amenity).attr('data-state', new_state).removeClass('clicked');
+  } else {
+    return button_id.text(new_state + ' ' + amenity).attr('data-state', new_state).addClass('clicked');
+  }
+}
 
 $(function(){
 
@@ -180,12 +187,12 @@ $(function(){
           addMarkers(plot_library);
         }
 
-        button_hit.text('Hide libraries').attr('data-state', 'hide').addClass('clicked');
+        toggleAmenityChosen(button_hit, 'libraries', 'hide');
       }
       else
       {
         clearMarkers(plot_library);
-        button_hit.text('Show libraries').attr('data-state', 'show').removeClass('clicked');
+        toggleAmenityChosen(button_hit, 'libraries');
       }
     }
   );
@@ -208,12 +215,12 @@ $(function(){
           addMarkers(plot_hospital);
         }
 
-        button_hit.text('Hide hospitals').attr('data-state', 'hide').addClass('clicked');
+        toggleAmenityChosen(button_hit, 'hospitals', 'hide');
       }
       else
       {
         clearMarkers(plot_hospital);
-        button_hit.text('Show hospitals').attr('data-state', 'show').removeClass('clicked');
+        toggleAmenityChosen(button_hit, 'hospitals');
       }
     }
   );
@@ -234,13 +241,12 @@ $(function(){
           addMarkers(plot_faultline);
         }
 
-        button_hit.text('Hide fault lines').attr('data-state', 'hide').addClass('clicked');
+        toggleAmenityChosen(button_hit, 'fault lines', 'hide');
       }
       else
       {
         clearMarkers(plot_faultline);
-
-        button_hit.text('Show fault lines').attr('data-state', 'show').removeClass('clicked');
+        toggleAmenityChosen(button_hit, 'fault lines');
       }
     }
   );
@@ -261,13 +267,12 @@ $(function(){
           addMarkers(plot_school);
         }
 
-        button_hit.text('Hide schools').attr('data-state', 'hide').addClass('clicked');
+        toggleAmenityChosen(button_hit, 'schools', 'hide');
       }
       else
       {
         clearMarkers(plot_school);
-
-        button_hit.text('Show schools').attr('data-state', 'show').removeClass('clicked');
+        toggleAmenityChosen(button_hit, 'schools');
       }
     }
   );
@@ -288,13 +293,12 @@ $(function(){
           addMarkers(plot_park);
         }
 
-        button_hit.text('Hide parks').attr('data-state', 'hide').addClass('clicked');
+        toggleAmenityChosen(button_hit, 'parks', 'hide');
       }
       else
       {
         clearMarkers(plot_park);
-
-        button_hit.text('Show parks').attr('data-state', 'show').removeClass('clicked');
+        toggleAmenityChosen(button_hit, 'parks');
       }
     }
   );
@@ -315,13 +319,12 @@ $(function(){
           addMarkers(plot_flood);
         }
 
-        button_hit.text('Hide floodplains').attr('data-state', 'hide').addClass('clicked');
+        toggleAmenityChosen(button_hit, 'floodplains', 'hide');
       }
       else
       {
         clearMarkers(plot_flood);
-
-        button_hit.text('Show floodplains').attr('data-state', 'show').removeClass('clicked');
+        toggleAmenityChosen(button_hit, 'floodplains');
       }
     }
   );
