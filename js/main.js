@@ -48,7 +48,7 @@ function plotPolygon(polygon_coords, polygon_color = '#005da9') {
     strokeColor: polygon_color,
     strokeOpacity: 1.0,
     strokeWeight: 3,
-    fillColor: '#005DA9',
+    fillColor: '#005da9',
     fillOpacity: 0.1
   });
   
@@ -77,10 +77,10 @@ function clearMarkers(plotted_markers) {
   
 }
 
-function overlayAmenityLines(amenity, plot_points, open_data, button_hit) {
+function overlayAmenityLines(amenity, plot_points, button_hit) {
   if (button_hit.attr('data-state') == 'show') {
     if (plot_points.length == 0) {
-      $.getJSON("data/" + open_data + ".json", function(data){
+      $.getJSON("data/" + amenity.replace(/\s/g, '') + ".json", function(data){
         renderCoordsPolyline(data, plot_points);
       });
     } else {
@@ -94,11 +94,11 @@ function overlayAmenityLines(amenity, plot_points, open_data, button_hit) {
   }
 }
 
-function overlayAmenityPoints(amenity, plot_points, open_data, button_hit) {
+function overlayAmenityPoints(amenity, plot_points, button_hit) {
   if (button_hit.attr('data-state') == 'show') {
     if (plot_points.length == 0) {
-      $.getJSON("data/" + open_data + ".json", function(data){
-        renderCoordsPoints(data, plot_points, 'images/icon-' + open_data + '.png');
+      $.getJSON("data/" + amenity + ".json", function(data){
+        renderCoordsPoints(data, plot_points, 'images/icon-' + amenity + '.png');
       });
     } else {
       addMarkers(plot_points);
@@ -111,10 +111,10 @@ function overlayAmenityPoints(amenity, plot_points, open_data, button_hit) {
   }
 }
 
-function overlayAmenityPolygons(amenity, plot_points, open_data, color, button_hit) {
+function overlayAmenityPolygons(amenity, plot_points, color, button_hit) {
   if (button_hit.attr('data-state') == 'show') {
     if (plot_points.length == 0) {
-      $.getJSON("data/" + open_data + ".json", function(data){
+      $.getJSON("data/" + amenity + ".json", function(data){
         renderCoordsPolygon(data, plot_points, color);
       });
     } else {
@@ -206,37 +206,37 @@ $(function(){
 
   $('#show-library').click(
     function(){
-      overlayAmenityPoints('libraries', plot_library, 'library', $(this));
+      overlayAmenityPoints('libraries', plot_library, $(this));
     }
   );
 
   $('#show-hospital').click(
     function(){
-      overlayAmenityPoints('hospitals', plot_hospital, 'hospital', $(this));
+      overlayAmenityPoints('hospitals', plot_hospital, $(this));
     }
   );
 
   $('#show-fault').click(
     function(){
-      overlayAmenityLines('fault lines', plot_faultline, 'faultline', $(this));
+      overlayAmenityLines('fault lines', plot_faultline, $(this));
     }
   );
 
   $('#show-school').click(
     function(){
-      overlayAmenityPolygons('schools', plot_school, 'school', '#333333', $(this));
+      overlayAmenityPolygons('schools', plot_school, '#333333', $(this));
     }
   );
 
   $('#show-park').click(
     function(){
-      overlayAmenityPolygons('parks', plot_park, 'park', '#393', $(this));
+      overlayAmenityPolygons('parks', plot_park, '#339933', $(this));
     }
   );
 
   $('#show-flood').click(
     function(){
-      overlayAmenityPolygons('floodplains', plot_flood, 'floodplain', '#005da9', $(this));
+      overlayAmenityPolygons('floodplains', plot_flood, '#005da9', $(this));
     }
   );
 });
