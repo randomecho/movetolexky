@@ -77,45 +77,21 @@ function clearMarkers(plotted_markers) {
   
 }
 
-function overlayAmenityLines(amenity, plot_points, button_hit) {
+function overlayAmenityByType(amenity, plot_points, button_hit, plotting_type, color = '#005da9') {
   if (button_hit.attr('data-state') == 'show') {
     if (plot_points.length == 0) {
-      $.getJSON("data/" + amenity.replace(/\s/g, '') + ".json", function(data){
-        renderCoordsPolyline(data, plot_points);
-      });
-    } else {
-      addMarkers(plot_points);
-    }
-
-    toggleAmenityChosen(button_hit, amenity, 'hide');
-  } else {
-    clearMarkers(plot_points);
-    toggleAmenityChosen(button_hit, amenity);
-  }
-}
-
-function overlayAmenityPoints(amenity, plot_points, button_hit) {
-  if (button_hit.attr('data-state') == 'show') {
-    if (plot_points.length == 0) {
-      $.getJSON("data/" + amenity + ".json", function(data){
-        renderCoordsPoints(data, plot_points, 'images/icon-' + amenity + '.png');
-      });
-    } else {
-      addMarkers(plot_points);
-    }
-
-    toggleAmenityChosen(button_hit, amenity, 'hide');
-  } else {
-    clearMarkers(plot_points);
-    toggleAmenityChosen(button_hit, amenity);
-  }
-}
-
-function overlayAmenityPolygons(amenity, plot_points, color, button_hit) {
-  if (button_hit.attr('data-state') == 'show') {
-    if (plot_points.length == 0) {
-      $.getJSON("data/" + amenity + ".json", function(data){
-        renderCoordsPolygon(data, plot_points, color);
+      $.getJSON("data/" + amenity.replace(/\s/g, '') + ".json", function(data) {
+        switch (plotting_type) {
+          case 'lines':
+            renderCoordsPolyline(data, plot_points);
+            break;
+          case 'points':
+            renderCoordsPoints(data, plot_points, 'images/icon-' + amenity + '.png');
+            break;
+          case 'polygons':
+            renderCoordsPolygon(data, plot_points, color);
+            break;
+        }
       });
     } else {
       addMarkers(plot_points);
@@ -206,37 +182,37 @@ $(function(){
 
   $('#show-library').click(
     function(){
-      overlayAmenityPoints('libraries', plot_library, $(this));
+      overlayAmenityByType('libraries', plot_library, $(this), 'points');
     }
   );
 
   $('#show-hospital').click(
     function(){
-      overlayAmenityPoints('hospitals', plot_hospital, $(this));
+      overlayAmenityByType('hospitals', plot_hospital, $(this), 'points');
     }
   );
 
   $('#show-fault').click(
     function(){
-      overlayAmenityLines('fault lines', plot_faultline, $(this));
+      overlayAmenityByType('fault lines', plot_faultline, $(this), 'lines');
     }
   );
 
   $('#show-school').click(
     function(){
-      overlayAmenityPolygons('schools', plot_school, '#333333', $(this));
+      overlayAmenityByType('schools', plot_school, $(this), 'polygons', '#333333');
     }
   );
 
   $('#show-park').click(
     function(){
-      overlayAmenityPolygons('parks', plot_park, '#339933', $(this));
+      overlayAmenityByType('parks', plot_park, $(this), 'polygons', '#339933');
     }
   );
 
   $('#show-flood').click(
     function(){
-      overlayAmenityPolygons('floodplains', plot_flood, '#005da9', $(this));
+      overlayAmenityByType('floodplains', plot_flood, $(this), 'polygons', '#005da9');
     }
   );
 });
