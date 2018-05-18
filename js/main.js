@@ -42,9 +42,7 @@ function plotPolyline(polyline_coords) {
   return marker_line;
 }
 
-function plotPolygon(polygon_coords, polygon_color) {
-  polygon_color = (typeof polygon_color == 'undefined' ) ? '#005DA9' : polygon_color;
- 
+function plotPolygon(polygon_coords, polygon_color = '#005da9') {
   var marked_area = new google.maps.Polygon({
     path: polygon_coords,
     strokeColor: polygon_color,
@@ -167,7 +165,6 @@ function renderCoordsPolyline(coordinates, plot_type) {
 }
 
 function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
-  polygon_color = (typeof polygon_color == 'undefined' ) ? '' : polygon_color;
   var coord_count = coordinates.length;
 
   for (var i = 0; i < coord_count; i++)
