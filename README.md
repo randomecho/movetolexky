@@ -16,10 +16,10 @@ The map shows location points, lines and area segments for such things as:
 
 - [Lexington's Open Data Portal](http://data.lexingtonky.gov/)
 
-### Todoing
-
-- Bike trails
-
 ## License
 
 [BSD 3-Clause License](http://opensource.org/licenses/BSD-3-Clause)
+
+### Health check
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/cbd7405b7a1a81a36cba/maintainability)](https://codeclimate.com/github/randomecho/movetolexky/maintainability)
