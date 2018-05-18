@@ -128,6 +128,19 @@ function overlayAmenityPolygons(amenity, plot_points, open_data, color, button_h
   }
 }
 
+function plotCoordinates(coord_points) {
+  var coords_plotted = [];
+
+  for (var i = 0; i < coord_points.length; i++)
+  {
+    var longlat = coord_points[i].split(',');
+    var coords = new google.maps.LatLng(longlat[1], longlat[0]);
+    coords_plotted.push(coords);
+  }
+
+  return coords_plotted;
+}
+
 function renderCoordsPoints(coordinates, plot_type, icon) {
   var coord_count = coordinates.length;
 
@@ -145,19 +158,10 @@ function renderCoordsPoints(coordinates, plot_type, icon) {
 function renderCoordsPolyline(coordinates, plot_type) {
   var coord_count = coordinates.length;
 
-  for (var i = 0; i < coord_count; i++)
-  {
+  for (var i = 0; i < coord_count; i++) {
     var coords_plotted = [];
     var coord_points = coordinates[i].coordinates.split(' ');
-    var polyline_point_count = coord_points.length;
-
-    for (var j = 0; j < polyline_point_count; j++)
-    {
-      var polyline_longlat = coord_points[j].split(',');
-      var polyline_coords = new google.maps.LatLng(polyline_longlat[1], polyline_longlat[0]);
-      coords_plotted.push(polyline_coords);
-    }
-
+    coords_plotted = plotCoordinates(coord_points);
     plot_type.push(plotPolyline(coords_plotted));
   }
 
@@ -175,30 +179,13 @@ function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
     {
       var multi_plot_count = coordinates[i].coordinates.length;
   
-      for (var k = 0; k < multi_plot_count; k++)
-      {
+      for (var k = 0; k < multi_plot_count; k++) {
         var coord_points = coordinates[i].coordinates[k].split(' ');
-        var polyline_point_count = coord_points.length;
-  
-        for (var j = 0; j < polyline_point_count; j++)
-        {
-          var polygon_longlat = coord_points[j].split(',');
-          var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-          coords_plotted.push(polygon_coords);
-        }
+        coords_plotted = plotCoordinates(coord_points);
       }
-    }
-    else
-    {
+    } else {
       var coord_points = coordinates[i].coordinates.split(' ');
-      var polyline_point_count = coord_points.length;
-
-      for (var j = 0; j < polyline_point_count; j++)
-      {
-        var polygon_longlat = coord_points[j].split(',');
-        var polygon_coords = new google.maps.LatLng(polygon_longlat[1], polygon_longlat[0]);
-        coords_plotted.push(polygon_coords);
-      }
+      coords_plotted = plotCoordinates(coord_points);
     }
 
     plot_type.push(plotPolygon(coords_plotted, polygon_color));
