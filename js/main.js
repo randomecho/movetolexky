@@ -59,8 +59,7 @@ function plotPolygon(polygon_coords, polygon_color = '#005da9') {
 function addMarkers(plotted_markers) {
   var marker_count = plotted_markers.length;
 
-  for (var i = 0; i < marker_count; i++)
-  {
+  for (var i = 0; i < marker_count; i++) {
     plotted_markers[i].setMap(map);
   }
   
@@ -70,8 +69,7 @@ function addMarkers(plotted_markers) {
 function clearMarkers(plotted_markers) {
   var marker_count = plotted_markers.length;
 
-  for (var i = 0; i < marker_count; i++)
-  {
+  for (var i = 0; i < marker_count; i++) {
     plotted_markers[i].setMap(null);
   }
   
@@ -107,8 +105,7 @@ function overlayAmenityByType(amenity, plot_points, button_hit, plotting_type, c
 function plotCoordinates(coord_points) {
   var coords_plotted = [];
 
-  for (var i = 0; i < coord_points.length; i++)
-  {
+  for (var i = 0; i < coord_points.length; i++) {
     var longlat = coord_points[i].split(',');
     var coords = new google.maps.LatLng(longlat[1], longlat[0]);
     coords_plotted.push(coords);
@@ -120,8 +117,7 @@ function plotCoordinates(coord_points) {
 function renderCoordsPoints(coordinates, plot_type, icon) {
   var coord_count = coordinates.length;
 
-  for (var i = 0; i < coord_count; i++)
-  {
+  for (var i = 0; i < coord_count; i++) {
     var longlat = coordinates[i].coordinates.split(',');
     var marker = plotMarker(longlat[1], longlat[0], coordinates[i].name, i, icon);
 
@@ -147,12 +143,10 @@ function renderCoordsPolyline(coordinates, plot_type) {
 function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
   var coord_count = coordinates.length;
 
-  for (var i = 0; i < coord_count; i++)
-  {
+  for (var i = 0; i < coord_count; i++) {
     var coords_plotted = [];
   
-    if (typeof coordinates[i].coordinates === 'object')
-    {
+    if (typeof coordinates[i].coordinates === 'object') {
       var multi_plot_count = coordinates[i].coordinates.length;
   
       for (var k = 0; k < multi_plot_count; k++) {
@@ -179,40 +173,27 @@ function toggleAmenityChosen(button_id, amenity, new_state = 'show') {
 }
 
 $(function(){
+  $('#show-library').click(function(){
+    overlayAmenityByType('libraries', plot_library, $(this), 'points');
+  });
 
-  $('#show-library').click(
-    function(){
-      overlayAmenityByType('libraries', plot_library, $(this), 'points');
-    }
-  );
+  $('#show-hospital').click(function(){
+    overlayAmenityByType('hospitals', plot_hospital, $(this), 'points');
+  });
 
-  $('#show-hospital').click(
-    function(){
-      overlayAmenityByType('hospitals', plot_hospital, $(this), 'points');
-    }
-  );
+  $('#show-fault').click(function(){
+    overlayAmenityByType('fault lines', plot_faultline, $(this), 'lines');
+  });
 
-  $('#show-fault').click(
-    function(){
-      overlayAmenityByType('fault lines', plot_faultline, $(this), 'lines');
-    }
-  );
+  $('#show-school').click(function(){
+    overlayAmenityByType('schools', plot_school, $(this), 'polygons', '#333333');
+  });
 
-  $('#show-school').click(
-    function(){
-      overlayAmenityByType('schools', plot_school, $(this), 'polygons', '#333333');
-    }
-  );
+  $('#show-park').click(function(){
+    overlayAmenityByType('parks', plot_park, $(this), 'polygons', '#339933');
+  });
 
-  $('#show-park').click(
-    function(){
-      overlayAmenityByType('parks', plot_park, $(this), 'polygons', '#339933');
-    }
-  );
-
-  $('#show-flood').click(
-    function(){
-      overlayAmenityByType('floodplains', plot_flood, $(this), 'polygons', '#005da9');
-    }
-  );
+  $('#show-flood').click(function(){
+    overlayAmenityByType('floodplains', plot_flood, $(this), 'polygons', '#005da9');
+  });
 });
