@@ -132,8 +132,7 @@ function renderCoordsPolyline(coordinates, plot_type) {
 
   for (var i = 0; i < coord_count; i++) {
     var coords_plotted = [];
-    var coord_points = coordinates[i].coordinates.split(' ');
-    coords_plotted = plotCoordinates(coord_points);
+    coords_plotted = plotCoordinates(coordinates[i].coordinates.split(' '));
     plot_type.push(plotPolyline(coords_plotted));
   }
 
@@ -150,12 +149,10 @@ function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
       var multi_plot_count = coordinates[i].coordinates.length;
   
       for (var k = 0; k < multi_plot_count; k++) {
-        var coord_points = coordinates[i].coordinates[k].split(' ');
-        coords_plotted = plotCoordinates(coord_points);
+        coords_plotted = plotCoordinates(coordinates[i].coordinates[k].split(' '));
       }
     } else {
-      var coord_points = coordinates[i].coordinates.split(' ');
-      coords_plotted = plotCoordinates(coord_points);
+      coords_plotted = plotCoordinates(coordinates[i].coordinates.split(' '));
     }
 
     plot_type.push(plotPolygon(coords_plotted, polygon_color));
