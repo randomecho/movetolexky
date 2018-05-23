@@ -114,6 +114,18 @@ function plotCoordinates(coord_points) {
   return coords_plotted;
 }
 
+function plotMultiPartCoordinates(coordinates) {
+  if (typeof coordinates === 'object') {
+    var multi_plot_count = coordinates.length;
+
+    for (var i = 0; i < multi_plot_count; i++) {
+      return plotCoordinates(coordinates[i].split(' '));
+    }
+  }
+
+  return plotCoordinates(coordinates.split(' '));
+}
+
 function renderCoordsPoints(coordinates, plot_type, icon) {
   var coord_count = coordinates.length;
 
@@ -131,8 +143,7 @@ function renderCoordsPolyline(coordinates, plot_type) {
   var coord_count = coordinates.length;
 
   for (var i = 0; i < coord_count; i++) {
-    var coords_plotted = [];
-    coords_plotted = plotCoordinates(coordinates[i].coordinates.split(' '));
+    var coords_plotted = plotCoordinates(coordinates[i].coordinates.split(' '));
     plot_type.push(plotPolyline(coords_plotted));
   }
 
@@ -143,18 +154,7 @@ function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
   var coord_count = coordinates.length;
 
   for (var i = 0; i < coord_count; i++) {
-    var coords_plotted = [];
-  
-    if (typeof coordinates[i].coordinates === 'object') {
-      var multi_plot_count = coordinates[i].coordinates.length;
-  
-      for (var k = 0; k < multi_plot_count; k++) {
-        coords_plotted = plotCoordinates(coordinates[i].coordinates[k].split(' '));
-      }
-    } else {
-      coords_plotted = plotCoordinates(coordinates[i].coordinates.split(' '));
-    }
-
+    var coords_plotted = plotMultiPartCoordinates(coordinates[i].coordinates);
     plot_type.push(plotPolygon(coords_plotted, polygon_color));
   }
 
