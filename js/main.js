@@ -57,22 +57,16 @@ function plotPolygon(polygon_coords, polygon_color = '#005da9') {
 
 // Run through and show the markers that have been plotted
 function addMarkers(plotted_markers) {
-  var marker_count = plotted_markers.length;
-
-  for (var i = 0; i < marker_count; i++) {
+  for (var i = 0, n = plotted_markers.length; i < n; i++) {
     plotted_markers[i].setMap(map);
   }
-  
 }
 
 // Clear the markers off the map
 function clearMarkers(plotted_markers) {
-  var marker_count = plotted_markers.length;
-
-  for (var i = 0; i < marker_count; i++) {
+  for (var i = 0, n = plotted_markers.length; i < n; i++) {
     plotted_markers[i].setMap(null);
   }
-  
 }
 
 function overlayAmenityByType(amenity, plot_points, button_hit, plotting_type, color = '#005da9') {
@@ -105,7 +99,7 @@ function overlayAmenityByType(amenity, plot_points, button_hit, plotting_type, c
 function plotCoordinates(coord_points) {
   var coords_plotted = [];
 
-  for (var i = 0; i < coord_points.length; i++) {
+  for (var i = 0, n = coord_points.length; i < n; i++) {
     var longlat = coord_points[i].split(',');
     var coords = new google.maps.LatLng(longlat[1], longlat[0]);
     coords_plotted.push(coords);
@@ -116,9 +110,7 @@ function plotCoordinates(coord_points) {
 
 function plotMultiPartCoordinates(coordinates) {
   if (typeof coordinates === 'object') {
-    var multi_plot_count = coordinates.length;
-
-    for (var i = 0; i < multi_plot_count; i++) {
+    for (var i = 0, n = coordinates.length; i < n; i++) {
       return plotCoordinates(coordinates[i].split(' '));
     }
   }
@@ -127,9 +119,7 @@ function plotMultiPartCoordinates(coordinates) {
 }
 
 function renderCoordsPoints(coordinates, plot_type, icon) {
-  var coord_count = coordinates.length;
-
-  for (var i = 0; i < coord_count; i++) {
+  for (var i = 0, n = coordinates.length; i < n; i++) {
     var longlat = coordinates[i].coordinates.split(',');
     var marker = plotMarker(longlat[1], longlat[0], coordinates[i].name, i, icon);
 
@@ -140,9 +130,7 @@ function renderCoordsPoints(coordinates, plot_type, icon) {
 }
 
 function renderCoordsPolyline(coordinates, plot_type) {
-  var coord_count = coordinates.length;
-
-  for (var i = 0; i < coord_count; i++) {
+  for (var i = 0, n = coordinates.length; i < n; i++) {
     var coords_plotted = plotCoordinates(coordinates[i].coordinates.split(' '));
     plot_type.push(plotPolyline(coords_plotted));
   }
@@ -151,9 +139,7 @@ function renderCoordsPolyline(coordinates, plot_type) {
 }
 
 function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
-  var coord_count = coordinates.length;
-
-  for (var i = 0; i < coord_count; i++) {
+  for (var i = 0, n = coordinates.length; i < n; i++) {
     var coords_plotted = plotMultiPartCoordinates(coordinates[i].coordinates);
     plot_type.push(plotPolygon(coords_plotted, polygon_color));
   }
