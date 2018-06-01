@@ -5,6 +5,24 @@ var plot_faultline = [];
 var plot_school = [];
 var plot_park = [];
 var plot_flood = [];
+var icons = {
+  hospitals: {
+    path: 'M0,100V0h20.189v39.349h39.563V0h20.195v100H59.752V56.27H20.189V100H0z',
+    fillColor: '#ffffff',
+    fillOpacity: 1,
+    scale: 0.3,
+    strokeColor: '#005da9',
+    strokeWeight: 3
+  },
+  libraries : {
+    path: 'M46.834,29.254c7.994,0,14.448-6.569,14.448-14.64C61.282,6.532,54.828,0,46.834,0S32.378,6.532,32.378,14.614 C32.378,22.685,38.84,29.254,46.834,29.254z M60.891,32.813c6.61,0.236,9.392,5.591,9.392,5.591l21.341,29.608c0.883,1.313,1.398,2.92,1.398,4.654 c0,4.604-3.688,8.342-8.243,8.342c-1.09,0-2.081-0.244-3.022-0.604l-12.883-3.638v12.997H24.15V76.767l-12.884,3.636 c-0.908,0.362-1.931,0.606-3.03,0.606C3.68,81.009,0,77.271,0,72.667c0-1.735,0.509-3.343,1.431-4.656l21.327-29.607 c0,0,2.799-5.355,9.386-5.59H60.891L60.891,32.813z M46.517,80.688L46.517,80.688l16.688-5.606l-0.365-0.074 c-11.525-3.416-7.046-18.806,4.453-15.372l1.583,0.557V42.823l-22.358,7.38L24.15,42.822v17.367l1.575-0.556 c11.518-3.435,16.005,11.955,4.48,15.371l-0.375,0.077L46.517,80.688L46.517,80.688z M92.458,100c1.143,0,2.06-0.925,2.06-2.079l0,0c0-1.161-0.917-2.08-2.06-2.08H2.2c-1.118,0-2.058,0.919-2.058,2.08l0,0 c0,1.153,0.94,2.079,2.058,2.079H92.458z',
+    fillColor: '#333333',
+    fillOpacity: 1,
+    scale: 0.3,
+    strokeColor: '#000000',
+    strokeWeight: 1
+  }
+};
 
 function initialize() {
   var mapOptions = {
@@ -38,7 +56,7 @@ function plotMarker(latitude, longitude, title, zindex, icon) {
     position: map_coords,
     title: title,
     zIndex: zindex,
-    icon: icon
+    icon: icons[icon]
   });
   
   return marker;
@@ -93,7 +111,7 @@ function overlayAmenityByType(amenity, plot_points, plotting_type, color = '#005
             renderCoordsPolyline(data, plot_points);
             break;
           case 'points':
-            renderCoordsPoints(data, plot_points, 'images/icon-' + amenity + '.png');
+            renderCoordsPoints(data, plot_points, amenity);
             break;
           case 'polygons':
             renderCoordsPolygon(data, plot_points, color);
