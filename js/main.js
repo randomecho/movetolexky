@@ -102,10 +102,9 @@ function overlayAmenityByType(amenity, plot_points, plotting_type, color = '#005
       }, function(error) {
         console.error("Overlay fault", error);
       });
-    } else {
-      addMarkers(plot_points);
     }
 
+    addMarkers(plot_points);
     toggleAmenityChosen(button_hit, amenity, 'hide');
   } else {
     clearMarkers(plot_points);
