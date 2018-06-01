@@ -18,6 +18,19 @@ function initialize() {
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
+function importOpenData(amenity) {
+  return new Promise(function(success, reject){
+    var jsonData = new XMLHttpRequest();
+    jsonData.open('GET', 'data/' + amenity.replace(/\s/g, '') + '.json', false);
+    jsonData.onreadystatechange = function() {
+      if (jsonData.readyState === XMLHttpRequest.DONE && jsonData.status === 200) {
+        success(JSON.parse(jsonData.response));
+      }
+    };
+    jsonData.send();
+  });
+}
+
 // Mark where on the map the point should go
 function plotMarker(latitude, longitude, title, zindex, icon) {
   var map_coords = new google.maps.LatLng(latitude, longitude);
@@ -69,10 +82,12 @@ function clearMarkers(plotted_markers) {
   }
 }
 
-function overlayAmenityByType(amenity, plot_points, button_hit, plotting_type, color = '#005da9') {
-  if (button_hit.attr('data-state') == 'show') {
+function overlayAmenityByType(amenity, plot_points, plotting_type, color = '#005da9') {
+  var button_hit =  document.getElementById('show-' + amenity);
+
+  if (button_hit.getAttribute('data-state') == 'show') {
     if (plot_points.length == 0) {
-      $.getJSON("data/" + amenity.replace(/\s/g, '') + ".json", function(data) {
+      importOpenData(amenity).then(function(data) {
         switch (plotting_type) {
           case 'lines':
             renderCoordsPolyline(data, plot_points);
@@ -84,6 +99,8 @@ function overlayAmenityByType(amenity, plot_points, button_hit, plotting_type, c
             renderCoordsPolygon(data, plot_points, color);
             break;
         }
+      }, function(error) {
+        console.error("Overlay fault", error);
       });
     } else {
       addMarkers(plot_points);
@@ -147,36 +164,34 @@ function renderCoordsPolygon(coordinates, plot_type, polygon_color) {
   addMarkers(plot_type);
 }
 
-function toggleAmenityChosen(button_id, amenity, new_state = 'show') {
-  if (new_state === 'show') {
-    button_id.text(new_state + ' ' + amenity).attr('data-state', new_state).removeClass('clicked');
-  } else {
-    button_id.text(new_state + ' ' + amenity).attr('data-state', new_state).addClass('clicked');
-  }
+function toggleAmenityChosen(button, amenity, new_state = 'show') {
+  var css_class = (new_state === 'show') ? '' : 'clicked';
+
+  button.setAttribute('class', css_class);
+  button.setAttribute('data-state', new_state);
+  button.textContent = new_state + ' ' + amenity;
 }
 
-$(function(){
-  $('#show-library').click(function(){
-    overlayAmenityByType('libraries', plot_library, $(this), 'points');
-  });
+document.getElementById('show-libraries').addEventListener('click', function(e){
+  overlayAmenityByType('libraries', plot_library, 'points');
+});
 
-  $('#show-hospital').click(function(){
-    overlayAmenityByType('hospitals', plot_hospital, $(this), 'points');
-  });
+document.getElementById('show-hospitals').addEventListener('click', function(e){
+  overlayAmenityByType('hospitals', plot_hospital, 'points');
+});
 
-  $('#show-fault').click(function(){
-    overlayAmenityByType('fault lines', plot_faultline, $(this), 'lines');
-  });
+document.getElementById('show-faultlines').addEventListener('click', function(e){
+  overlayAmenityByType('faultlines', plot_faultline, 'lines');
+});
 
-  $('#show-school').click(function(){
-    overlayAmenityByType('schools', plot_school, $(this), 'polygons', '#333333');
-  });
+document.getElementById('show-schools').addEventListener('click', function(e){
+  overlayAmenityByType('schools', plot_school, 'polygons', '#333333');
+});
 
-  $('#show-park').click(function(){
-    overlayAmenityByType('parks', plot_park, $(this), 'polygons', '#339933');
-  });
+document.getElementById('show-parks').addEventListener('click', function(e){
+  overlayAmenityByType('parks', plot_park, 'polygons', '#339933');
+});
 
-  $('#show-flood').click(function(){
-    overlayAmenityByType('floodplains', plot_flood, $(this), 'polygons', '#005da9');
-  });
+document.getElementById('show-floodplains').addEventListener('click', function(e){
+  overlayAmenityByType('floodplains', plot_flood, 'polygons', '#005da9');
 });
